@@ -102,28 +102,6 @@ if __name__ == '__main__':
     model.add(Dense(NUM_CLASSES))
     model.add(Activation('softmax'))
 
-    # model = Sequential()
-    # model.add(Conv2D(IMG_DIM, (3, 3), input_shape=X_train.shape[1:]))
-    # model.add(Activation('relu'))
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
-    #
-    # model.add(Conv2D(IMG_DIM, (3, 3)))
-    # model.add(Activation('relu'))
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
-    #
-    # model.add(Conv2D(IMG_DIM * 2, (3, 3)))
-    # model.add(Activation('relu'))
-    # model.add(MaxPooling2D(pool_size=(2, 2)))
-    #
-    # model.add(Flatten())
-    # model.add(Dense(512))
-    # model.add(Activation('relu'))
-    # model.add(Dropout(0.5))
-    # model.add(Dense(NUM_CLASSES))
-    # model.add(Activation('softmax'))
-
-    # sgd = SGD(lr=0.1, decay=1e-6, momentum=0.9, nesterov=True)
-
     model.compile(loss='categorical_crossentropy',
                   optimizer='sgd',
                   metrics=['accuracy']
