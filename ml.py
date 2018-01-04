@@ -109,12 +109,12 @@ if __name__ == '__main__':
         # LogisticRegression(),
         # SVC(),
         RandomForestClassifier(),
-        # Perceptron(),
+        Perceptron(),
         # KNeighborsClassifier(),
         # KNeighborsClassifier(n_neighbors=15),
         # KNeighborsClassifier(n_neighbors=2),
-        # GaussianNB(),
-        # MultinomialNB()
+        GaussianNB(),
+        MultinomialNB(),
     )
 
     # Iterate through each model
