@@ -49,6 +49,36 @@ PATIENCE = 2
 ################################################################################
 
 
+def plot_random_images():
+    fig = plt.figure(figsize=(5, 14))
+    for i in range(NUM_CLASSES):
+        idx = np.where(y_train == i)[0]
+        features_idx = X_train[idx, ::]
+
+        img_num1 = np.random.randint(features_idx.shape[0])
+        im1 = np.transpose(features_idx[img_num1, ::], (1, 2, 0))
+        img_num2 = np.random.randint(features_idx.shape[0])
+        im2 = np.transpose(features_idx[img_num2, ::], (1, 2, 0))
+        img_num3 = np.random.randint(features_idx.shape[0])
+        im3 = np.transpose(features_idx[img_num3, ::], (1, 2, 0))
+        img_num4 = np.random.randint(features_idx.shape[0])
+        im4 = np.transpose(features_idx[img_num4, ::], (1, 2, 0))
+
+        ax1 = fig.add_subplot(10, 4, (i * 4) + 1, xticks=[], yticks=[])
+        ax2 = fig.add_subplot(10, 4, (i * 4) + 2, xticks=[], yticks=[])
+        ax3 = fig.add_subplot(10, 4, (i * 4) + 3, xticks=[], yticks=[])
+        ax4 = fig.add_subplot(10, 4, (i * 4) + 4, xticks=[], yticks=[])
+        ax1.set_title(LABEL_NAMES[i])
+        ax2.set_title(LABEL_NAMES[i])
+        ax3.set_title(LABEL_NAMES[i])
+        ax4.set_title(LABEL_NAMES[i])
+        ax1.imshow(im1)
+        ax2.imshow(im2)
+        ax3.imshow(im3)
+        ax4.imshow(im4)
+    plt.show()
+
+
 def plot_loss_acc(mh):
     sns.set()
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
@@ -73,43 +103,45 @@ def plot_loss_acc(mh):
 if __name__ == '__main__':
     (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 
-    y_train = keras.utils.to_categorical(y_train, NUM_CLASSES)
-    y_test = keras.utils.to_categorical(y_test, NUM_CLASSES)
-    X_train = X_train.astype('float32')
-    X_test = X_test.astype('float32')
-    X_train /= 255
-    X_test /= 255
+    plot_random_images()
 
-    model = Sequential()
-    model.add(Conv2D(IMG_DIM, (3, 3), padding='same', input_shape=X_train.shape[1:]))
-    model.add(Activation('relu'))
-    model.add(Conv2D(IMG_DIM, (3, 3)))
-    model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
-
-    model.add(Conv2D(IMG_DIM * 2, (3, 3), padding='same'))
-    model.add(Activation('relu'))
-    model.add(Conv2D(IMG_DIM * 2, (3, 3)))
-    model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.25))
-
-    model.add(Flatten())
-    model.add(Dense(IMG_DIM * 8))
-    model.add(Activation('relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(NUM_CLASSES))
-    model.add(Activation('softmax'))
-
-    model.compile(loss='categorical_crossentropy',
-                  optimizer='sgd',
-                  metrics=['accuracy']
-                  )
-
-    model.summary()
-
-    early_stopping_monitor = EarlyStopping(patience=PATIENCE)
-
-    mh = model.fit(X_train, y_train, validation_data=(X_test, y_test),
-                   batch_size=BATCH_SIZE, epochs=EPOCHS, callbacks=[early_stopping_monitor], shuffle=True)
+    # y_train = keras.utils.to_categorical(y_train, NUM_CLASSES)
+    # y_test = keras.utils.to_categorical(y_test, NUM_CLASSES)
+    # X_train = X_train.astype('float32')
+    # X_test = X_test.astype('float32')
+    # X_train /= 255
+    # X_test /= 255
+    #
+    # model = Sequential()
+    # model.add(Conv2D(IMG_DIM, (3, 3), padding='same', input_shape=X_train.shape[1:]))
+    # model.add(Activation('relu'))
+    # model.add(Conv2D(IMG_DIM, (3, 3)))
+    # model.add(Activation('relu'))
+    # model.add(MaxPooling2D(pool_size=(2, 2)))
+    # model.add(Dropout(0.25))
+    #
+    # model.add(Conv2D(IMG_DIM * 2, (3, 3), padding='same'))
+    # model.add(Activation('relu'))
+    # model.add(Conv2D(IMG_DIM * 2, (3, 3)))
+    # model.add(Activation('relu'))
+    # model.add(MaxPooling2D(pool_size=(2, 2)))
+    # model.add(Dropout(0.25))
+    #
+    # model.add(Flatten())
+    # model.add(Dense(IMG_DIM * 8))
+    # model.add(Activation('relu'))
+    # model.add(Dropout(0.5))
+    # model.add(Dense(NUM_CLASSES))
+    # model.add(Activation('softmax'))
+    #
+    # model.compile(loss='categorical_crossentropy',
+    #               optimizer='sgd',
+    #               metrics=['accuracy']
+    #               )
+    #
+    # model.summary()
+    #
+    # early_stopping_monitor = EarlyStopping(patience=PATIENCE)
+    #
+    # mh = model.fit(X_train, y_train, validation_data=(X_test, y_test),
+    #                batch_size=BATCH_SIZE, epochs=EPOCHS, callbacks=[early_stopping_monitor], shuffle=True)
